@@ -18,6 +18,22 @@ def detail(request, question_id):
 
 def result(request):
     latest_question_list = Question.objects.all().order_by('-pub_date')[:5]
+
+    total = [0 for _ in range(5)]
+    i = 0
+    j = 0
+
+    for q in latest_question_list:
+        choice = Choice.objects.all().filter(question = q)
+        for c in choice:
+            total[i] += c.votes
+        i += 1
+
+        for c in choice:
+            c.proportion = round(c.votes / total[j] * 100)
+            c.save()
+        j += 1
+
     context = {'questions': latest_question_list}
     return render(request, 'polls/result.html', context)
 
@@ -34,5 +50,5 @@ def vote(request, question_id):
         })
     selected_choice.votes += 1
     selected_choice.save()
-    return HttpResponseRedirect(reverse('polls:index', kwargs={'question_id': question.id}))
+    return HttpResponseRedirect(reverse('polls:index'))
 

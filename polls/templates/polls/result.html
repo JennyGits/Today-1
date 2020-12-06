@@ -3,11 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Result</title>
+    <style>
+        body{
+            background-color:#f9e0ae;
+            text-align:center;
+        }
+        h1{
+            color:#fc8621
+        }
+        .proportion{
+            color: #c24914
+        }
+        li{
+            list-style:none;
+        }
+    </style>
 </head>
 <body>
     <h1>결과</h1>
     {% for question in questions %}
-        {{question.question_text}}<br>
+        <div>
+            {{question.question_text}}<br>
+            <ul>
+                {% for choice in question.choice_set.all %}
+                    <li>{{choice.choice_text}} : <span class="proportion">{{choice.proportion}}%</span></li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endfor %}
 </body>
 </html>
