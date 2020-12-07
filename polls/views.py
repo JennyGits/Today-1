@@ -20,17 +20,16 @@ def detail(request, question_id):
 def result(request):
     latest_question_list = Question.objects.all().order_by('-pub_date')[:5]
 
-    total = [0 for _ in range(5)]
-    i = 0
-
     for q in latest_question_list:
+        total = 0
         choice = Choice.objects.all().filter(question = q)
+
         for c in choice:
-            total[i] += c.votes
+            total += c.votes
+
         for c in choice:
-            c.proportion = round(c.votes / total[i] * 100)
+            c.proportion = round(c.votes / total * 100)
             c.save()
-        i += 1
 
     context = {'questions': latest_question_list}
     return render(request, 'polls/result.html', context)
