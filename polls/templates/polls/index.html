@@ -29,6 +29,7 @@
         <p>No polls are available.</p>
     {% endif %}
 
-    <a href="{% url 'polls:result' %}">결과확인</a>
+    <a href="{% url 'polls:result' %}">결과확인</a><br>
+    <a href="{% url 'polls:addQuestion' %}">질문추가하기</a>
 </body>
 </html>

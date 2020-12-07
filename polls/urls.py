@@ -6,7 +6,9 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('<int:question_id>/', views.detail, name='detail'),
     path('<int:question_id>/vote/', views.vote, name='vote'),
-    path('result/', views.result, name='result')
+    path('result/', views.result, name='result'),
+    path('addQuestion/', views.addQuestion, name='addQuestion'),
+    path('add/', views.add, name='add'),
 ]
 
 

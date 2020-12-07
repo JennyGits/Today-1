@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Add</title>
+    <style>
+        body{
+            background-color:#f9e0ae;
+            text-align:center;
+        }
+    </style>
 </head>
 <body>
-$END$
+    <form action="{% url 'polls:add'%}" method="post">
+        {% csrf_token %}
+        질문<br>
+        <input type="text" name="question"><br>
+        선택지<br>
+        <input type="text" name="choice1"><br>
+        <input type="text" name="choice2"><br>
+
+        <input type="submit" value="등록하기">
+    </form>
+
 </body>
 </html>

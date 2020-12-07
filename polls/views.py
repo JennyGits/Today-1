@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from bs4 import BeautifulSoup
 from polls.models import Question, Choice
+from django.utils import timezone
 
 def main(request):
     return render(request, 'polls/main.html')
@@ -52,3 +53,21 @@ def vote(request, question_id):
     selected_choice.save()
     return HttpResponseRedirect(reverse('polls:index'))
 
+def addQuestion(request):
+    return render(request, 'polls/addQuestion.html')
+
+def add(request):
+    question = request.POST.get('question')
+    choice1 = request.POST.get('choice1')
+    choice2 = request.POST.get('choice2')
+
+    q = Question(question_text=question, pub_date=timezone.now())
+    q.save()
+
+    c = Choice(question=q, choice_text=choice1)
+    c.save()
+
+    c = Choice(question=q, choice_text=choice2)
+    c.save()
+
+    return HttpResponseRedirect(reverse('polls:index'))
