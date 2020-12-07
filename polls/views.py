@@ -22,18 +22,15 @@ def result(request):
 
     total = [0 for _ in range(5)]
     i = 0
-    j = 0
 
     for q in latest_question_list:
         choice = Choice.objects.all().filter(question = q)
         for c in choice:
             total[i] += c.votes
-        i += 1
-
         for c in choice:
-            c.proportion = round(c.votes / total[j] * 100)
+            c.proportion = round(c.votes / total[i] * 100)
             c.save()
-        j += 1
+        i += 1
 
     context = {'questions': latest_question_list}
     return render(request, 'polls/result.html', context)
@@ -66,7 +63,6 @@ def add(request):
 
     c = Choice(question=q, choice_text=choice1)
     c.save()
-
     c = Choice(question=q, choice_text=choice2)
     c.save()
 
